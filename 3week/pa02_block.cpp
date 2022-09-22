@@ -50,21 +50,61 @@ int main(){
 // 오른쪽부터 블록 깔기 -- 여기서 문제 발생 도대체 왜 블록이 안 깔림????
     x = 0;
     for(int blockM : rightBlocks){
-        if(blockM == -1) continue;
-        else{
-            for(int i=blockM; i>0; i--){
-                blocks[x][rowSize-blockM] = 1;
+        if(blockM == -1){
+            x++;
+        }else{
+            for(int i=blockM; i>=0; i--){
+                blocks[x][rowSize-i] = 1;
             }
+            x++;
         }
-        x++;
     }
 
-//보도블록 출력
+/*보도블록 출력
     for(int i = 0; i<colSize; i++){
         for(int j = 0; j<rowSize; j++){
             printf("%d ", blocks[i][j]);
         }
         printf("\n");
     }
+*/
+    vector<int> topBlocks, bottomBlocks;
+    
+    //위에서 블록 세기
+    for(int i = 0; i < rowSize; i++){
+        int flag = 0;
+        for(int j = 0; j < colSize; j++){
+            if(blocks[j][i] == 0){
+                flag = 1;
+                topBlocks.push_back(j+1-1);
+                break;
+            }
+        }
+        if(flag == 0){ topBlocks.push_back(colSize); }
+    }
+
+    //아래에서 블록 세기
+    for(int i = 0; i < rowSize; i++){
+        int flag = 0;
+        for(int j = colSize-1; j >= 0; j--){
+            if(blocks[j][i] == 0){
+                flag = 1;
+                bottomBlocks.push_back(colSize-j-1);
+                break;
+            }
+        }
+        if(flag == 0){ bottomBlocks.push_back(-1); }
+    }
+
+    //위아래 블록 출력
+    for(int k : topBlocks){
+        printf("%d ", k);
+    }
+    printf("-9\n");
+    for(int k : bottomBlocks){
+        printf("%d ", k);
+    }
+    printf("-9\n");
+
     return 0;   
 }
