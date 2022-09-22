@@ -38,6 +38,10 @@ int main(){
     }
 
     char blocks[colSize][rowSize] = {0,};
+    for(int i=0; i<rowSize; i++){
+        blocks[0][i] = 0;
+    }
+
 // 왼쪽부터 블록 깔기
     int x = 0;
     for(int blockN : leftBlocks){
@@ -53,21 +57,13 @@ int main(){
         if(blockM == -1){
             x++;
         }else{
-            for(int i=blockM; i>=0; i--){
+            for(int i=blockM; i>0; i--){
                 blocks[x][rowSize-i] = 1;
             }
             x++;
         }
     }
 
-/*보도블록 출력
-    for(int i = 0; i<colSize; i++){
-        for(int j = 0; j<rowSize; j++){
-            printf("%d ", blocks[i][j]);
-        }
-        printf("\n");
-    }
-*/
     vector<int> topBlocks, bottomBlocks;
     
     //위에서 블록 세기
