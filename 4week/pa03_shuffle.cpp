@@ -4,43 +4,57 @@
 
 using namespace std;
 
-void swap(int* a, int* b)
+int partition(int arr[], int start, int end)
 {
-    int t = *a;
-    *a = *b;
-    *b = t;
-}
-
-int partition(int arr[], int low, int high)
-{
-    int pivot = arr[high];
-    int i = (low - 1); 
-  
-    for (int j = low; j <= high - 1; j++) {
-        if (arr[j] < pivot) {
+ 
+    int pivot = arr[start];
+ 
+    int count = 0;
+    for (int i = start + 1; i <= end; i++) {
+        if (arr[i] <= pivot)
+            count++;
+    }
+ 
+    // Giving pivot element its correct position
+    int pivotIndex = start + count;
+    swap(arr[pivotIndex], arr[start]);
+ 
+    // Sorting left and right parts of the pivot element
+    int i = start, j = end;
+ 
+    while (i < pivotIndex && j > pivotIndex) {
+ 
+        while (arr[i] <= pivot) {
             i++;
-            swap(&arr[i], &arr[j]);
+        }
+ 
+        while (arr[j] > pivot) {
+            j--;
+        }
+ 
+        if (i < pivotIndex && j > pivotIndex) {
+            swap(arr[i++], arr[j--]);
         }
     }
-    swap(&arr[i + 1], &arr[high]);
-    return (i + 1);
+ 
+    return pivotIndex;
 }
-
-void quickSort(int arr[], int low, int high)
+ 
+void quickSort(int arr[], int start, int end)
 {
-    if (low < high) {
-        int pi = partition(arr, low, high);
-        quickSort(arr, low, pi - 1);
-        quickSort(arr, pi + 1, high);
-    }
-}
-  
-void printArray(int arr[], int size)
-{
-    int i;
-    for (i = 0; i < size; i++)
-        cout << arr[i] << " ";
-    cout << endl;
+ 
+    // base case
+    if (start >= end)
+        return;
+ 
+    // partitioning the array
+    int p = partition(arr, start, end);
+ 
+    // Sorting the left part
+    quickSort(arr, start, p - 1);
+ 
+    // Sorting the right part
+    quickSort(arr, p + 1, end);
 }
 
 int* shuffleDeck(int* deck, int size) {
@@ -81,13 +95,12 @@ int main(){
     }while(n != -9); */
 
     int *sortedList = new int[listSize];
-    
-    for(i=0; i < listSize-1; i++){
-        sortedList[i] = list1[i];
-        cout << sortedList[i] << endl;
-    }
 
     quickSort(sortedList, 0, listSize-2);
+
+    for(int i = 0; i<listSize-1; i++){
+        cout << sortedList[i] << " ";
+    }
 
     int *shuffledList = new int[listSize-1];
     
