@@ -15,10 +15,25 @@ int main(){
         int weight;
         cin >> weight;
 
-        if(train.size() == 0){
+        cout << "=============train start===============" << endl;
+        for(int i : train){
+            cout << i << " ";
+        }
+        cout << endl;
+        cout << "==============train end==============" << endl;
+
+        if(train.size() == 0 && tmp.size() == 0){
             if(weight != 1 || weight != n){
                 train.push_back(weight);
             }else{
+                tmp.push(weight);
+            }
+        }else if(train.size() == 0 && tmp.size() != 0){
+            if(weight != 1 || weight != n){
+                train.push_back(weight);
+            }else{
+                train.push_back(tmp.top());
+                tmp.pop();
                 tmp.push(weight);
             }
         }else{
@@ -32,15 +47,15 @@ int main(){
                 }
             }else{
                 int cmp = tmp.top();
-                if(cmp - train.front() > 0 && weight - train.front() > 0){
-                    if(cmp - weight > 0){
-                        train.insert(train.begin(), weight);
+                if(cmp > train.front() && weight > train.front()){
+                    if(cmp < weight){
+                        train.push_back(weight);
                     }else{
-                        train.insert(train.begin(), cmp);
+                        train.push_back(cmp);
                         tmp.pop();
                         tmp.push(weight);
                     }
-                }else if(cmp - train.front() > 0 && weight - train.front() < 0){
+                }else if(cmp > train.front() && weight < train.front()){
                     if(cmp - train.front() < train.back() - weight){
                         train.insert(train.begin(), cmp);
                         tmp.pop();
@@ -48,7 +63,7 @@ int main(){
                     }else{
                         train.push_back(weight);
                     }
-                }else if(cmp - train.front() < 0 && weight - train.front() > 0){
+                }else if(cmp < train.front() < 0 && weight > train.front()){
                     if(cmp - train.back() < train.front() - weight){
                         train.push_back(cmp);
                         tmp.pop();
@@ -57,7 +72,7 @@ int main(){
                         train.insert(train.begin(), weight);
                     }
                 }else{
-                    if(cmp - weight > 0){
+                    if(cmp > weight){
                         train.push_back(cmp);
                         tmp.pop();
                         tmp.push(weight);
