@@ -7,16 +7,8 @@
 
 using namespace std;
 
-typedef struct node{
-    int child;
-    int dist;
-    int level;
-    int seq;
-}Node;
-
 int N;
 vector< pair<string, string> > inv;
-map<string, Node> M;
 map<string, vector<string> > m2;
 vector<string> mafia;
 
@@ -30,7 +22,14 @@ string findRoot(vector< pair<string, string> > &v){
 
 int childCtr(string k){
     if(m2.find(k) == m2.end()) return 1;
-    return 
+    int n = m2[k].size();
+
+    int j=0;
+    for(int i = 0; i < n; i++){
+        j = j+childCtr(m2[k][i]);
+        cout << j << endl;
+    }
+    return j;
 }
 
 int main(){
@@ -62,12 +61,9 @@ int main(){
 
     string root = findRoot(inv);
     mafia.push_back(root);
-    int n = m2[root].size();
-
-    for(int i = 0; i < n; i++){
-        int k = childCtr(m2[root][i]);
-        cout << k << endl;
-    }
+    
+    int n = childCtr(root);
+    cout << n << endl;
 
     cout << root << endl;
     return 0;
