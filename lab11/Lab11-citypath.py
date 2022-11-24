@@ -28,6 +28,7 @@ e = list()
 for i in range(N):
     str = input().split()
     m[i+1] = list(map(int, str[1:]))
+    m[i+1].pop()
 
 for key, val in m.items():
     for k in val:
@@ -43,5 +44,9 @@ for key, val in m.items():
 
 E = len(e)
 
+graph = {v1: {v2 : len(m[v2])-2 for v2 in m[v1]} for v1 in m.keys()}
+
 for _ in e:
     print(f"v1={_[0]}, v2={_[1]}")
+
+print(dijkstra(graph, 1))
