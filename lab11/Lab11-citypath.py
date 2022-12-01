@@ -43,7 +43,7 @@ for key, val in m.items():
 
 E = len(e)
 
-graph = {v1: {v2 : len(m[v2])-1 for v2 in m[v1]} for v1 in m.keys()}
+graph = {v1: {v2 : len(m[v1])-1 for v2 in m[v1]} for v1 in m.keys()}
 
 for _ in e:
     print(f"v1={_[0]}, v2={_[1]}")
@@ -52,4 +52,4 @@ a = list()
 for i in range(1, N-1):
     a.append(max(dijkstra(graph, i).values()))
 
-print(max(a))
+print(a)
